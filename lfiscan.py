@@ -1,9 +1,11 @@
 import pyfiglet
+from colorama import Fore,Style
 import argparse
 import httpx
 import sys
 import time
-from colorama import init, Fore, Style; init(autoreset=True) 
+import os 
+ 
 
 # PARSER / ARGUMENTS
 parser = argparse.ArgumentParser() #Create parser
@@ -23,9 +25,18 @@ def CheckHost(): # CHECK IF THE HOST EXIST OR IS ACTIVE BEFORE FUZZING
        if res.status_code == 200:
           print("[:] Host is up!")
        else :
-          print("[:] Site does not exist or is not available (HTTP {res.status_code}).")
+          print(Fore.RED + "[:] Site does not exist or is not available (HTTP {res.status_code}).")
     except httpx.RequestError:
-        print("[:] The host appears to be down or unreachable. Please try again later.")
+        print(Fore.RED + "[:] The host appears to be down or unreachable. Please try again later." \
+        "")
+
+def CheckWordlist(): #CHECK IF THE WORDLIST PATH EXISTS BEFORE FUZZ 
+   wpath = args.W
+   if os.path.exists(wpath):
+      pass
+   else:
+      print(Fore.RED + "[:] Wordlist path not founded.")
+      
  
 # ---------------BANNER---------------------
 print(pyfiglet.figlet_format(text="lfiscan",font="larry3d"),end="")
@@ -34,5 +45,6 @@ print("\n" + "-"*60 + "\n")
 
 print(f"[:] HOST : {args.H}")
 CheckHost()
+CheckWordlist()
 
 
