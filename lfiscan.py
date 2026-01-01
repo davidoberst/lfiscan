@@ -62,8 +62,11 @@ def Fuzz():
 #open wordlist
 with open(args.W, "r", encoding="utf-8") as f: #f = file
     for line in f:
-        payload = line.strip()
-  
+      payload = line.strip()
+      #create URL with the wordlist
+      newURL = args.H +"?page="+ line
+      print(newURL)
+
 
 
 # ---------------BANNER---------------------
