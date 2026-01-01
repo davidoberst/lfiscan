@@ -30,6 +30,7 @@ def CheckHost(): # CHECK IF THE HOST EXIST OR IS ACTIVE BEFORE FUZZING
     except httpx.RequestError:
         print(Fore.RED + "[:] The host appears to be down or unreachable. Please try again later." \
         "")
+        sys.exit(1)
 
 def CheckWordlist(): #CHECK IF THE WORDLIST PATH EXISTS BEFORE FUZZ 
    wpath = args.W
@@ -40,8 +41,7 @@ def CheckWordlist(): #CHECK IF THE WORDLIST PATH EXISTS BEFORE FUZZ
 
 
 def Fuzz():
- #----scan fot website vulnerable parameters-----
-  
+  #----scan fot website vulnerable parameters-----
   r = requests.get(args.H) #request
   h = args.H.strip() #host 
   if ".php" in r.text.lower():
@@ -57,10 +57,9 @@ def Fuzz():
      time.sleep(1)
      print(Fore.YELLOW + "[:] No vulnerable parameters founded.")
  
-#------INJECT PAYLOADS IN URL-----------
-
-#open wordlist
-with open(args.W, "r", encoding="utf-8") as f: #f = file
+  #------INJECT PAYLOADS IN URL-----------
+  #open wordlist
+  with open(args.W, "r", encoding="utf-8") as f: #f = file
     for line in f:
       payload = line.strip()
       #create URL with the wordlist
