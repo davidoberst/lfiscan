@@ -1,5 +1,6 @@
 import pyfiglet
 from colorama import Fore,Style
+import requests
 import argparse
 import httpx
 import sys
@@ -25,7 +26,8 @@ def CheckHost(): # CHECK IF THE HOST EXIST OR IS ACTIVE BEFORE FUZZING
        if res.status_code == 200:
           print("[:] Host is up!")
        else :
-          print(Fore.RED + "[:] Site does not exist or is not available (HTTP {res.status_code}).")
+          print(Fore.RED + f"[:] Site does not exist or is not available (HTTP {res.status_code}).")
+          sys.exit(1)
     except httpx.RequestError:
         print(Fore.RED + "[:] The host appears to be down or unreachable. Please try again later." \
         "")
@@ -36,6 +38,16 @@ def CheckWordlist(): #CHECK IF THE WORDLIST PATH EXISTS BEFORE FUZZ
       pass
    else:
       print(Fore.RED + "[:] Wordlist path not founded.")
+
+
+def Fuzz():
+ #check if the website has PHP
+  r = requests.get(args.H)
+  if ".php" in r.text.lower():
+    print(Fore.GREEN + "[:] PHP founded,it may be vulnerable to LFI.")
+  else:
+    print(Fore.YELLOW + "[:] No PHP founded .")
+  
       
  
 # ---------------BANNER---------------------
@@ -46,5 +58,7 @@ print("\n" + "-"*60 + "\n")
 print(f"[:] HOST : {args.H}")
 CheckHost()
 CheckWordlist()
+Fuzz()
+
 
 
