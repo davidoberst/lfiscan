@@ -41,26 +41,27 @@ def CheckWordlist(): #CHECK IF THE WORDLIST PATH EXISTS BEFORE FUZZ
 
 
 def Fuzz():
- #----check if the website has PHP and URL has -----
+ #----scan fot website vulnerable parameters-----
   
   r = requests.get(args.H) #request
   h = args.H.strip() #host 
   if ".php" in r.text.lower():
+    time.sleep(1)
     print(Fore.GREEN + "[:] PHP found, may be vulnerable to LFI.")
   else:
-    print(Fore.YELLOW + "[:] No PHP founded .")
+    time.sleep(1)
+    print(Fore.YELLOW + "[:] No PHP founded.")
   if "?page=" in h:
+     time.sleep(1)
      print(Fore.GREEN + "[:] Vulnerable parameter founded! <?page=home>")
-  
-
-
-
-  
-
-  #------INJECT PAYLOADS IN URL-----------
-  
-      
+  else:
+     time.sleep(1)
+     print(Fore.YELLOW + "[:] No vulnerable parameters founded.")
  
+#------INJECT PAYLOADS IN URL-----------
+  
+
+
 # ---------------BANNER---------------------
 print(pyfiglet.figlet_format(text="lfiscan",font="larry3d"),end="")
 print("            https://github.com/davidoberst",end="")
