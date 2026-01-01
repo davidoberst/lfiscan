@@ -41,12 +41,15 @@ def CheckWordlist(): #CHECK IF THE WORDLIST PATH EXISTS BEFORE FUZZ
 
 
 def Fuzz():
- #check if the website has PHP
+ #----check if the website has PHP-----
+
   r = requests.get(args.H)
   if ".php" in r.text.lower():
-    print(Fore.GREEN + "[:] PHP founded,it may be vulnerable to LFI.")
+    print(Fore.GREEN + "[:] PHP found, may be vulnerable to LFI.")
   else:
     print(Fore.YELLOW + "[:] No PHP founded .")
+
+  #------INJECT PAYLOADS IN URL-----------
   
       
  
