@@ -7,7 +7,6 @@ import sys
 import time
 import os 
  
-
 # PARSER / ARGUMENTS
 parser = argparse.ArgumentParser() #Create parser
 parser.add_argument("-H",required=True,metavar="HOST",help="Host = http://examplehost.co") #host
@@ -59,6 +58,11 @@ def Fuzz():
      print(Fore.YELLOW + "[:] No vulnerable parameters founded.")
  
 #------INJECT PAYLOADS IN URL-----------
+
+#open wordlist
+with open(args.W, "r", encoding="utf-8") as f: #f = file
+    for line in f:
+        payload = line.strip()
   
 
 
