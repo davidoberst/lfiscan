@@ -26,7 +26,7 @@ def CheckHost(): # CHECK IF THE HOST EXIST OR IS ACTIVE BEFORE FUZZING
        if res.status_code == 200:
           print("[:] Host is up!")
        else :
-          print(Fore.RED + f"[:] Site does not exist or is not available (HTTP {res.status_code}).")
+          print(Fore.RED + f"[:] Site does not exist or is not available right now (HTTP {res.status_code}).")
           sys.exit(1)
     except httpx.RequestError:
         print(Fore.RED + "[:] The host appears to be down or unreachable. Please try again later." \
@@ -41,13 +41,21 @@ def CheckWordlist(): #CHECK IF THE WORDLIST PATH EXISTS BEFORE FUZZ
 
 
 def Fuzz():
- #----check if the website has PHP-----
-
-  r = requests.get(args.H)
+ #----check if the website has PHP and URL has -----
+  
+  r = requests.get(args.H) #request
+  h = args.H.strip() #host 
   if ".php" in r.text.lower():
     print(Fore.GREEN + "[:] PHP found, may be vulnerable to LFI.")
   else:
     print(Fore.YELLOW + "[:] No PHP founded .")
+  if "?page=" in h:
+     print(Fore.GREEN + "[:] Vulnerable parameter founded! <?page=home>")
+  
+
+
+
+  
 
   #------INJECT PAYLOADS IN URL-----------
   
