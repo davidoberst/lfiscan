@@ -65,7 +65,7 @@ def Fuzz():
       if r.status_code == 200:
          print(f"{r.status_code} OK = {Fore.GREEN + newURL + Style.RESET_ALL}")
       else:
-         print((f"{r.status_code}= {Fore.RED + newURL + Style.RESET_ALL}"))
+         print((f"{r.status_code} = {Fore.RED + newURL + Style.RESET_ALL}"))
 
 # ---------------BANNER---------------------
 print(pyfiglet.figlet_format(text="lfiscan",font="larry3d"),end="")
